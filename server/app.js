@@ -6,10 +6,14 @@ const cors = require("cors");
 const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
 const userRoutes = require("./routes/userRoute");
+const fileUpload = require("express-fileupload")
 
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload({
+    useTempFiles:true
+}))
 
 //middleware for error
 app.use(errMiddleware);

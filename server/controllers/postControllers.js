@@ -3,6 +3,14 @@ const ErrorHandler = require("../utils/errorHandler");
 const Post = require("../models/postModel");
 const Comment = require("../models/commentModel");
 const ApiFeatures = require("../utils/apiFeatures");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: "dtge4ftyt",
+  api_key: "518717485326524",
+  api_secret: "4Uo_91qBtwtmn1FT3lfvv20c9Mc",
+  secure: true,
+});
 
 // 1--> get all posts
 // 2--> get a post
@@ -32,9 +40,20 @@ exports.getAPost = catchAsyncError(async (req, res, next) => {
 
 // create a new post --LOGGED IN ========
 exports.createAnewPost = catchAsyncError(async (req, res, next) => {
-  console.log(req.user.id);
-  const post = await Post.create({ ...req.body, user: req.user.id });
-  res.status(201).json({ success: true, post });
+  // uploading photo to cloudinary
+  const file = req.files.photo;
+  cloudinary.uploader.upload(file.tempFilePath, async (err, result) => {
+    if (err) {
+      return next(new ErrorHandler("Failed to upload photo", 500));
+    }
+
+    const post = await Post.create({
+      ...req.body,
+      user: req.user.id,
+      coverImage: result.url,
+    });
+    res.status(201).json({ success: true, post });
+  });
 });
 
 // Update a post --LOGGED IN ===========
