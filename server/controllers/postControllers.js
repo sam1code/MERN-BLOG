@@ -12,12 +12,12 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 // get all post ======================
 exports.getAllPosts = catchAsyncError(async (req, res, next) => {
-  // const postCount = await Post.count();
+  const postCount = await Post.count();
   const apiFeature = new ApiFeatures(Post.find(), req.query)
     .searchFeature()
     .paginationFeature(process.env.BLOG_PER_PAGE);
   const posts = await apiFeature.query;
-  res.status(200).send({ success: true, posts });
+  res.status(200).send({ success: true, posts, postCount });
 });
 
 // get a post ========================
@@ -32,14 +32,18 @@ exports.getAPost = catchAsyncError(async (req, res, next) => {
 
 // create a new post --LOGGED IN ========
 exports.createAnewPost = catchAsyncError(async (req, res, next) => {
-  const post = await Post.create(req.body);
+  console.log(req.user.id);
+  const post = await Post.create({ ...req.body, user: req.user.id });
   res.status(201).json({ success: true, post });
 });
 
 // Update a post --LOGGED IN ===========
 exports.updatePost = catchAsyncError(async (req, res, next) => {
-  let post = await Post.findById(req.params.id);
-
+  let post = await Post.findById(req.params.id).populate("user", "email");
+  console.log(post);
+  if (post.user.email !== req.user.email) {
+    return next(new ErrorHandler("you are not the owner of this post", 404));
+  }
   if (!post) {
     return next(new ErrorHandler("post not found", 404));
   }
@@ -60,7 +64,10 @@ exports.updatePost = catchAsyncError(async (req, res, next) => {
 
 // Delete a post --LOGGED IN ===============
 exports.deletePost = catchAsyncError(async (req, res, next) => {
-  let post = await Post.findById(req.params.id);
+  let post = await Post.findById(req.params.id).populate("user", "email");
+  if (post.user.email !== req.user.email) {
+    return next(new ErrorHandler("you are not the owner of this post", 404));
+  }
   if (!post) {
     return next(new ErrorHandler("post not found", 404));
   }

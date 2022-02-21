@@ -5,15 +5,15 @@ const {
   getAPost,
   deletePost,
 } = require("../controllers/postControllers");
+const { isAuthenticatedUser } = require("../middleWare/Auth");
 
 const router = require("express").Router();
 
 router
-  .post("/create", createAnewPost)
   .get("/all", getAllPosts)
-  .put("/:id", updatePost)
   .get("/:id", getAPost)
-  .delete("/:id", deletePost);
-
+  .post("/create", isAuthenticatedUser, createAnewPost)
+  .put("/:id", isAuthenticatedUser, updatePost)
+  .delete("/:id", isAuthenticatedUser, deletePost);
 
 module.exports = router;

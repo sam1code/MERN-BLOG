@@ -4,7 +4,7 @@ const commentSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    // required: true,
+    required: true,
   },
   postId: {
     type: String,
@@ -14,6 +14,7 @@ const commentSchema = mongoose.Schema({
     type: String,
     required: [true, "plese provide the comment"],
   },
+  
 });
 
 module.exports = mongoose.model("Comment", commentSchema);

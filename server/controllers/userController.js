@@ -5,6 +5,15 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
+// 1--> register a user
+// 2--> login users
+// 3--> logout user
+// 4--> forget password(email sending)
+// 5--> reset password(updating Password)
+// 6--> Get user Detail
+// 7--> update User Password
+// 8--> update user data
+
 //register a user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create(req.body);
@@ -42,7 +51,7 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// forget password
+// forget password(email sending)
 exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
   if (!req.body.email) {
     return next(new ErrorHandler("No email recieved", 401));
@@ -81,7 +90,7 @@ exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-// reset password
+// reset password(updating Password)
 exports.resetPassword = async (req, res, next) => {
 
   if (!req.body.password || !req.body.confirmPassword) {

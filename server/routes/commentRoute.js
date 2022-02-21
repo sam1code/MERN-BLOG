@@ -5,10 +5,11 @@ const {
 } = require("../controllers/commentController");
 
 const router = require("express").Router();
+const { isAuthenticatedUser } = require("../middleWare/Auth");
 
 router
-  .post("/create", createAnewComment)
-  .put("/:id", updateComment)
-  .delete("/:id", deleteComment);
+  .post("/create", isAuthenticatedUser, createAnewComment)
+  .put("/:id", isAuthenticatedUser, updateComment)
+  .delete("/:id", isAuthenticatedUser, deleteComment);
 
 module.exports = router;

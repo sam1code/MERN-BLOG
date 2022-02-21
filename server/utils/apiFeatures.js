@@ -12,9 +12,12 @@ class ApiFeatures {
           },
         }
       : {};
-    this.query = this.query.find({
-      $or: [{ title: keyword.search }, { text: keyword.search }],
-    });
+    this.query = this.query
+      .find({
+        $or: [{ title: keyword.search }, { text: keyword.search }],
+      })
+      .select("coverImage")
+      .populate("user", "email");
     return this;
   }
 
