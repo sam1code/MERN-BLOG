@@ -16,5 +16,4 @@ router
   .delete("/:id", deletePost);
 
 
-// router.post("/comment/getall")
 module.exports = router;
