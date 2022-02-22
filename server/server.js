@@ -3,7 +3,8 @@ require("dotenv").config({ path: "./config/config.env" });
 const connectDatabase = require("./config/database");
 const client = require("./config/redis");
 const error = require("./middleWare/error");
-PORT = process.env.PORT;
+
+PORT = process.env.PORT || 5000;
 
 // Server Listen on port
 (async () => {
@@ -18,9 +19,11 @@ PORT = process.env.PORT;
 
   //error middlewares
   app.use(error);
-
+  // DB connection
   await connectDatabase();
+  // Redix connection
   await client.connect();
+  // listen
   const server = app.listen(PORT, () => {
     console.log(`listening on http://localhost:${PORT}`);
   });

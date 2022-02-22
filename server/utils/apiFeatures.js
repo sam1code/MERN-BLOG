@@ -3,6 +3,8 @@ class ApiFeatures {
     this.query = query;
     this.queryStr = queryStr;
   }
+
+  // Search feature case insensetive
   searchFeature() {
     const keyword = this.queryStr.keyword
       ? {
@@ -21,6 +23,7 @@ class ApiFeatures {
     return this;
   }
 
+  // pagination according to how many blog post you want
   paginationFeature(resultsPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;
     const skip = resultsPerPage * (currentPage - 1);
