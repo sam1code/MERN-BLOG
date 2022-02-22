@@ -1,6 +1,7 @@
 const app = require("./app");
 require("dotenv").config({ path: "./config/config.env" });
 const connectDatabase = require("./config/database");
+const client = require("./config/redis");
 const error = require("./middleWare/error");
 PORT = process.env.PORT;
 
@@ -19,6 +20,7 @@ PORT = process.env.PORT;
   app.use(error);
 
   await connectDatabase();
+  await client.connect();
   const server = app.listen(PORT, () => {
     console.log(`listening on http://localhost:${PORT}`);
   });

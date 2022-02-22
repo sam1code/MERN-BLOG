@@ -16,7 +16,7 @@ class ApiFeatures {
       .find({
         $or: [{ title: keyword.search }, { text: keyword.search }],
       })
-      .select("coverImage")
+      .select("coverImage createdAt")
       .populate("user", "email");
     return this;
   }
