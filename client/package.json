@@ -1,0 +1,38 @@
+{
+  "name": "parcel-react-tailwindcss-template",
+  "version": "1.0.0",
+  "description": "Minimal CodeSandbox template to use configurable Tailwind CSS with React v17",
+  "scripts": {
+    "start": "parcel ./public/index.html",
+    "build": "parcel ./public/index.html"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.16.7",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.4.3",
+    "axios": "^0.26.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^6.2.1",
+    "react-toastify": "^8.2.0",
+    "tailwindcss": "^1.9.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@types/node": "^17.0.19",
+    "parcel": "^2.3.2",
+    "process": "^0.11.10",
+    "typescript": "^4.5.5"
+  },
+  "keywords": [
+    "react",
+    "parcel",
+    "tailwind",
+    "tailwind css",
+    "tailwindcss"
+  ],
+  "proxy": "https://sales-blink.herokuapp.com/"
+}
